@@ -2,33 +2,30 @@
 
  *  FILE DESCRIPTION
  *  -------------------------------------------------------------------------------------------------------------------
- *         File:  Compiler.h
- *       Module:  -
+ *         File:  IntCrtl.h
+ *       Module:  IntCrtl
  *
- *  Description:  Contains Compiler Dependent MACRO Definition     
+ *  Description:  header file for IntCrtl Module    
  *  
  *********************************************************************************************************************/
-#ifndef COMPILER_H
-#define COMPILER_H
+#ifndef IntCrtl_H
+#define IntCrtl_H
 
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
-
+#include "Std_Types.h"
+#include "IntCtrl_Cfg.h"
+#include "Mcu_Hw.h"
 
 /**********************************************************************************************************************
  *  GLOBAL CONSTANT MACROS
  *********************************************************************************************************************/
-/* NULL_PTR define with a void pointer to zero definition*/
-#define NULL_PTR       ((void *)0)
-
-/* INLINE  define for abstraction of the keyword inline*/
-#define INLINE         inline
-
-/* LOCAL_INLINE define for abstraction of the keyword inline in functions with "static" scope.
-   Different compilers may require a different sequence of the keywords "static" and "inline" 
-   if this is supported at all. */
-#define LOCAL_INLINE   static inline
+// Priority grouping control 
+#define GROUP_XXX                      4                                          //Group priority[0-7] , sub-group[0]
+#define GROUP_XXY                      5                                          //Group priority[0-3] , sub-group[0-1]
+#define GROUP_XYY                      6                                          //Group priority[0-1] , sub-group[0-3]
+#define GROUP_YYY                      7                                          //Group priority[0]   , sub-group[0-7]
 
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION MACROS
@@ -38,20 +35,51 @@
 /**********************************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
  *********************************************************************************************************************/
-
+ typedef enum
+ {	
+	 GPIO_PORTA    = 0    ,
+	 GPIO_PORTB     			,
+	 GPIO_PORTC     			,
+	 GPIO_PORTD     			,
+	 GPIO_PORTE     			,
+	 
+	UART0         			  ,
+	UART1     
+	 
+ }IRQ_Type ;
+ 
+typedef struct{
+	IRQ_Type	       		    IRQn;
+	uint8					    Group_Pr;
+	uint8					    SubGroup_Pr;
+	uint8						State;   //enable-disable
+}IRQ_CfgType;
 
 /**********************************************************************************************************************
  *  GLOBAL DATA PROTOTYPES
  *********************************************************************************************************************/
+extern const IRQ_CfgType IRQ_Cfg[NVIC_IQR_ACTIVE_NO] ;
 
  
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION PROTOTYPES
  *********************************************************************************************************************/
-
  
-#endif  /* COMPILER_H */
+/******************************************************************************
+* \Syntax          : void IntCrtl_Init(void)                                      
+* \Description     : initialize Nvic\SCB Module by parsing the Configuration 
+*                    into Nvic\SCB registers                                    
+*                                                                             
+* \Sync\Async      : Synchronous                                               
+* \Reentrancy      : Non Reentrant                                             
+* \Parameters (in) : None                     
+* \Parameters (out): None                                                      
+* \Return value:   : None
+*******************************************************************************/
+void IntCrtl_Init(void);
+ 
+#endif  /* IntCrtl_H */
 
 /**********************************************************************************************************************
- *  END OF FILE: Std_Types.h
+ *  END OF FILE: IntCrtl.h
  *********************************************************************************************************************/
