@@ -55,66 +55,66 @@ Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelID)
 	uint8 pin  = ChannelID%8;
 	if (port ==0) //PORT_A
 	{
-		if(pin ==0) return (GPIODATA_PortA).PIN.P0;
-		if(pin ==1) return (GPIODATA_PortA).PIN.P1;
-		if(pin ==2) return (GPIODATA_PortA).PIN.P2;
-		if(pin ==3) return (GPIODATA_PortA).PIN.P3;
-		if(pin ==4) return (GPIODATA_PortA).PIN.P4;
-		if(pin ==5) return (GPIODATA_PortA).PIN.P5;
-		if(pin ==6) return (GPIODATA_PortA).PIN.P6;
-		if(pin ==7) return (GPIODATA_PortA).PIN.P7;	
+		if(pin ==0) return (Dio_LevelType)(GPIODATA_PortA).PIN.P0;
+		if(pin ==1) return (Dio_LevelType)(GPIODATA_PortA).PIN.P1;
+		if(pin ==2) return (Dio_LevelType)(GPIODATA_PortA).PIN.P2;
+		if(pin ==3) return (Dio_LevelType)(GPIODATA_PortA).PIN.P3;
+		if(pin ==4) return (Dio_LevelType)(GPIODATA_PortA).PIN.P4;
+		if(pin ==5) return (Dio_LevelType)(GPIODATA_PortA).PIN.P5;
+		if(pin ==6) return (Dio_LevelType)(GPIODATA_PortA).PIN.P6;
+		if(pin ==7) return (Dio_LevelType)(GPIODATA_PortA).PIN.P7;	
 	}
 	if (port ==1) //PORT_B
 	{
-		if(pin ==0) return (GPIODATA_PortB).PIN.P0;
-		if(pin ==1) return (GPIODATA_PortB).PIN.P1;
-		if(pin ==2) return (GPIODATA_PortB).PIN.P2;
-		if(pin ==3) return (GPIODATA_PortB).PIN.P3;
-		if(pin ==4) return (GPIODATA_PortB).PIN.P4;
-		if(pin ==5) return (GPIODATA_PortB).PIN.P5;
-		if(pin ==6) return (GPIODATA_PortB).PIN.P6;
-		if(pin ==7) return (GPIODATA_PortB).PIN.P7;	
+		if(pin ==0) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P0;
+		if(pin ==1) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P1;
+		if(pin ==2) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P2;
+		if(pin ==3) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P3;
+		if(pin ==4) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P4;
+		if(pin ==5) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P5;
+		if(pin ==6) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P6;
+		if(pin ==7) return  (Dio_LevelType)(GPIODATA_PortB).PIN.P7;	
 	}
 	if (port ==2) //PORT_C
 	{
-		if(pin ==0) return (GPIODATA_PortC).PIN.P0;
-		if(pin ==1) return (GPIODATA_PortC).PIN.P1;
-		if(pin ==2) return (GPIODATA_PortC).PIN.P2;
-		if(pin ==3) return (GPIODATA_PortC).PIN.P3;
-		if(pin ==4) return (GPIODATA_PortC).PIN.P4;
-		if(pin ==5) return (GPIODATA_PortC).PIN.P5;
-		if(pin ==6) return (GPIODATA_PortC).PIN.P6;
-		if(pin ==7) return (GPIODATA_PortC).PIN.P7;
+		if(pin ==0) return (Dio_LevelType)(GPIODATA_PortC).PIN.P0;
+		if(pin ==1) return (Dio_LevelType)(GPIODATA_PortC).PIN.P1;
+		if(pin ==2) return (Dio_LevelType)(GPIODATA_PortC).PIN.P2;
+		if(pin ==3) return (Dio_LevelType)(GPIODATA_PortC).PIN.P3;
+		if(pin ==4) return (Dio_LevelType)(GPIODATA_PortC).PIN.P4;
+		if(pin ==5) return (Dio_LevelType)(GPIODATA_PortC).PIN.P5;
+		if(pin ==6) return (Dio_LevelType)(GPIODATA_PortC).PIN.P6;
+		if(pin ==7) return (Dio_LevelType)(GPIODATA_PortC).PIN.P7;
 	}
 	if (port ==3) //PORT_D
 	{
-		if(pin ==0) return (GPIODATA_PortD).PIN.P0;
-		if(pin ==1) return (GPIODATA_PortD).PIN.P1;
-		if(pin ==2) return (GPIODATA_PortD).PIN.P2;
-		if(pin ==3) return (GPIODATA_PortD).PIN.P3;
-		if(pin ==4) return (GPIODATA_PortD).PIN.P4;
-		if(pin ==5) return (GPIODATA_PortD).PIN.P5;
-		if(pin ==6) return (GPIODATA_PortD).PIN.P6;
-		if(pin ==7) return (GPIODATA_PortD).PIN.P7;
+		if(pin ==0) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P0;
+		if(pin ==1) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P1;
+		if(pin ==2) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P2;
+		if(pin ==3) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P3;
+		if(pin ==4) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P4;
+		if(pin ==5) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P5;
+		if(pin ==6) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P6;
+		if(pin ==7) return  (Dio_LevelType)(GPIODATA_PortD).PIN.P7;
 	}
 	if (port ==4) //PORT_E
 	{
-		if(pin ==0) return (GPIODATA_PortE).PIN.P0;
-		if(pin ==1) return (GPIODATA_PortE).PIN.P1;
-		if(pin ==2) return (GPIODATA_PortE).PIN.P2;
-		if(pin ==3) return (GPIODATA_PortE).PIN.P3;
-		if(pin ==4) return (GPIODATA_PortE).PIN.P4;
-		if(pin ==5) return (GPIODATA_PortE).PIN.P5;
+		if(pin ==0) return (Dio_LevelType)(GPIODATA_PortE).PIN.P0;
+		if(pin ==1) return (Dio_LevelType)(GPIODATA_PortE).PIN.P1;
+		if(pin ==2) return (Dio_LevelType)(GPIODATA_PortE).PIN.P2;
+		if(pin ==3) return (Dio_LevelType)(GPIODATA_PortE).PIN.P3;
+		if(pin ==4) return (Dio_LevelType)(GPIODATA_PortE).PIN.P4;
+		if(pin ==5) return (Dio_LevelType)(GPIODATA_PortE).PIN.P5;
 	}
 	if (port ==5) //PORT_F
 	{
-		if(pin ==0) return (GPIODATA_PortF).PIN.P0;
-		if(pin ==1) return (GPIODATA_PortF).PIN.P1;
-		if(pin ==2) return (GPIODATA_PortF).PIN.P2;
-		if(pin ==3) return (GPIODATA_PortF).PIN.P3;
-		if(pin ==4) return (GPIODATA_PortF).PIN.P4;
+		if(pin ==0) return (Dio_LevelType)(GPIODATA_PortF).PIN.P0;
+		if(pin ==1) return (Dio_LevelType)(GPIODATA_PortF).PIN.P1;
+		if(pin ==2) return (Dio_LevelType)(GPIODATA_PortF).PIN.P2;
+		if(pin ==3) return (Dio_LevelType)(GPIODATA_PortF).PIN.P3;
+		if(pin ==4) return (Dio_LevelType)(GPIODATA_PortF).PIN.P4;
 	}
-	
+	return (Dio_LevelType)0; //default
 }
 
 /******************************************************************************
@@ -252,9 +252,10 @@ void Dio_WritePort(Dio_PortType PortID, Dio_PortLevelType Level)
 *******************************************************************************/
 Dio_LevelType	Dio_FlipChannel(Dio_ChannelType ChannelID)
 {
-	return 0;
+	return (Dio_LevelType)0;
 }
 
 /**********************************************************************************************************************
  *  END OF FILE: DIO.c
  *********************************************************************************************************************/
+

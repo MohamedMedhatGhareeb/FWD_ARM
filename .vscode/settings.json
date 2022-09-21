@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "intctrl_cfg.h": "c"
+        "intctrl_cfg.h": "c",
+        "gpt_cfg.h": "c",
+        "gpt_types.h": "c",
+        "mcu_hw.h": "c"
     }
 }

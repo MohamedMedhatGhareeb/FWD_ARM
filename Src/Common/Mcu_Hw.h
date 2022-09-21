@@ -107,31 +107,116 @@ typedef union
     GPIOPCTL_BF PMC;
 }GPIOPCTL_Tag;
 
-/*
-typedef union 
+//GPT
+typedef struct 
 {
-    uint32 R;
-    GPIODATA_BF PIN;
-}GPIODATA_Tag;
+    uint32 TIM_0   :1;
+    uint32 TIM_1   :1;
+    uint32 TIM_2   :1;
+    uint32 TIM_3   :1;
+    uint32 TIM_4   :1;
+    uint32 TIM_5   :1;
+    uint32     		 :26;
+}RCGCTIMER_BF; 
 
 typedef union 
 {
     uint32 R;
-    GPIODIR_BF PIN;
-}GPIODIR_Tag;
+    RCGCTIMER_BF TIM_NO;
+}RCGCTIMER_Tag;
+
+typedef struct 
+{
+    uint32 TIM_EN   :1; 
+    uint32     	 	 :31;
+}GPTMCTL_BF; 
 
 typedef union 
 {
     uint32 R;
-    GPIOIS_BF PIN;
-}GPIOIS_Tag;
+    GPTMCTL_BF TIM_EN;
+}GPTMCTL_Tag;
+
+typedef struct 
+{
+    uint32 GPTMCFG   :3; 
+    uint32     	 	 :29;
+}GPTMCFG_BF; 
 
 typedef union 
 {
     uint32 R;
-    GPIOIBE_BF PIN;
-}GPIOIBE_Tag;
-*/
+    GPTMCFG_BF TIM_EN;
+}GPTMCFG_Tag;
+
+typedef struct 
+{
+    uint32 TnMR      :2;
+    uint32 TnCMR     :1;
+    uint32 TnAMS     :1;
+    uint32 TnCDIR    :1;
+    uint32 TnMIE     :1;
+    uint32 TnWOT     :1;
+    uint32 TnSNAPS   :1;
+    uint32 TnILD     :1;
+    uint32 TnPWMIE   :1;
+    uint32 TnMRSU    :1;
+    uint32 TnPLO     :1;
+    
+    uint32     	 	 :20;
+}GPTMTnMR_BF; 
+
+typedef union 
+{
+    uint32 R;
+    GPTMTnMR_BF TnMR;
+}GPTMTnMR_Tag;
+
+typedef struct 
+{
+    uint32 TATOIM      :1;
+    uint32 CAMIM       :1;
+    uint32 CAEIM       :1;
+    uint32 RTCIM       :1;
+    uint32 TAMIM       :1;
+    uint32             :3;
+    uint32 TBTOIM      :1;
+    uint32 CBMIM       :1;
+    uint32 CBEIM       :1;
+    uint32 TBMIM       :1;
+    uint32             :4;
+    uint32 WUEIM       :1;
+    uint32     	 	     :15;
+}GPTMIMR_BF; 
+
+typedef union 
+{
+    uint32 R;
+    GPTMIMR_BF MIMR;
+}GPTMIMR_Tag;
+
+typedef struct 
+{
+    uint32 TATOCINT      :1;
+    uint32 CAMCINT       :1;
+    uint32 CAECINT       :1;
+    uint32 RTCCINT       :1;
+    uint32 TAMCINT       :1;
+    uint32            	 :3;
+    uint32 TBTOCINT      :1;
+    uint32 CBMCINT       :1;
+    uint32 CBECINT       :1;
+    uint32 TBMCINT       :1;
+    uint32           	   :4;
+    uint32 WUECINT       :1;
+    uint32     	 	 		   :15;
+}GPTMICR_BF; 
+
+typedef union 
+{
+    uint32 R;
+    GPTMICR_BF MICR;
+}GPTMICR_Tag;
 
 /**********************************************************************************************************************
  *  GLOBAL CONSTANT MACROS
@@ -142,13 +227,18 @@ typedef union
 #define INTCTRL                                *((volatile INTCTRL_Tag*)(CORTEXM4_CORE_PERI_BASE+0xD04))
 #define VECTKEY_APINT                          0x05FA
 
-//-----------------------------------GPIO-------------------------------------------------------------------
+//-------------------------------------GPIO-------------------------------------------------------------------//
 
 
 #define SYSTEM_CONTROL_BASE_ADDRESS												0x400FE000
 #define RCGCGPIO_Offset																		0x608
+#define RCGCTIMER_Offset																	0x604
+#define RCGCWTIMER_Offset																	0x65C
 #define GPIO_CLK_GATE                                     *((volatile RCGCGPIO_Tag*)(SYSTEM_CONTROL_BASE_ADDRESS+RCGCGPIO_Offset))
-																											
+#define RCGCTIMER_CLK_GATE                                *((volatile RCGCTIMER_Tag*)(SYSTEM_CONTROL_BASE_ADDRESS+RCGCTIMER_Offset))
+#define RCGCWTIMER_CLK_GATE                               *((volatile RCGCTIMER_Tag*)(SYSTEM_CONTROL_BASE_ADDRESS+RCGCWTIMER_Offset))
+	
+
 #define PORTA_APB_BASE																	  0x40004000 
 #define PORTA_AHB_BASE																	  0x40058000 
 #define PORTB_APB_BASE																	  0x40005000 
@@ -355,7 +445,136 @@ typedef union
 #define GPIOPCTL_PortE                                  *((volatile GPIOPCTL_Tag*)(PORTE_APB_BASE+GPIOPCTL_Offset))
 #define GPIOPCTL_PortF                                  *((volatile GPIOPCTL_Tag*)(PORTF_APB_BASE+GPIOPCTL_Offset))
 
-//#define GPIODATA
+//----------------------------------------GPT------------------------------------------------------------------------//
+#define TIMER_0_BASE																	  0x40030000 
+#define TIMER_1_BASE																	  0x40031000 
+#define TIMER_2_BASE																	  0x40032000 
+#define TIMER_3_BASE																	  0x40033000 
+#define TIMER_4_BASE																	  0x40034000 
+#define TIMER_5_BASE																	  0x40035000 
+#define WTIMER_0_BASE																	  0x40036000 
+#define WTIMER_1_BASE																	  0x40037000 
+#define WTIMER_2_BASE																	  0x4004C000 
+#define WTIMER_3_BASE																	  0x4004D000 
+#define WTIMER_4_BASE																	  0x4004E000 
+#define WTIMER_5_BASE																	  0x4004F000 
+
+#define GPTMCFG_Offset																	0x000
+#define GPTMTAMR_Offset																	0x004
+#define GPTMTBMR_Offset																	0x008
+#define GPTMCTL_Offset																	0x00C
+#define GPTMIMR_Offset																	0x018
+#define GPTMICR_Offset																	0x024
+#define GPTMTAILR_Offset																0x028
+#define GPTMTBILR_Offset																0x02C
+#define GPTMTAV_Offset																	0x050
+#define GPTMTBV_Offset																	0x054
+
+
+#define GPTMCTL_TIMER_0                                  *((volatile GPTMCTL_Tag*)(TIMER_0_BASE+GPTMCTL_Offset))
+#define GPTMCTL_TIMER_1                                  *((volatile GPTMCTL_Tag*)(TIMER_1_BASE+GPTMCTL_Offset))
+#define GPTMCTL_TIMER_2                                  *((volatile GPTMCTL_Tag*)(TIMER_2_BASE+GPTMCTL_Offset))
+#define GPTMCTL_TIMER_3                                  *((volatile GPTMCTL_Tag*)(TIMER_3_BASE+GPTMCTL_Offset))
+#define GPTMCTL_TIMER_4                                  *((volatile GPTMCTL_Tag*)(TIMER_4_BASE+GPTMCTL_Offset))
+#define GPTMCTL_TIMER_5                                  *((volatile GPTMCTL_Tag*)(TIMER_5_BASE+GPTMCTL_Offset))
+#define GPTMCTL_WTIMER_0                                 *((volatile GPTMCTL_Tag*)(WTIMER_0_BASE+GPTMCTL_Offset))
+#define GPTMCTL_WTIMER_1                                 *((volatile GPTMCTL_Tag*)(WTIMER_1_BASE+GPTMCTL_Offset))
+#define GPTMCTL_WTIMER_2                                 *((volatile GPTMCTL_Tag*)(WTIMER_2_BASE+GPTMCTL_Offset))
+#define GPTMCTL_WTIMER_3                                 *((volatile GPTMCTL_Tag*)(WTIMER_3_BASE+GPTMCTL_Offset))
+#define GPTMCTL_WTIMER_4                                 *((volatile GPTMCTL_Tag*)(WTIMER_4_BASE+GPTMCTL_Offset))
+#define GPTMCTL_WTIMER_5                                 *((volatile GPTMCTL_Tag*)(WTIMER_5_BASE+GPTMCTL_Offset))
+
+#define GPTMCFG_TIMER_0                                  *((volatile GPTMCFG_Tag*)(TIMER_0_BASE+GPTMCFG_Offset))
+#define GPTMCFG_TIMER_1                                  *((volatile GPTMCFG_Tag*)(TIMER_1_BASE+GPTMCFG_Offset))
+#define GPTMCFG_TIMER_2                                  *((volatile GPTMCFG_Tag*)(TIMER_2_BASE+GPTMCFG_Offset))
+#define GPTMCFG_TIMER_3                                  *((volatile GPTMCFG_Tag*)(TIMER_3_BASE+GPTMCFG_Offset))
+#define GPTMCFG_TIMER_4                                  *((volatile GPTMCFG_Tag*)(TIMER_4_BASE+GPTMCFG_Offset))
+#define GPTMCFG_TIMER_5                                  *((volatile GPTMCFG_Tag*)(TIMER_5_BASE+GPTMCFG_Offset))
+#define GPTMCFG_WTIMER_0                                 *((volatile GPTMCFG_Tag*)(WTIMER_0_BASE+GPTMCFG_Offset))
+#define GPTMCFG_WTIMER_1                                 *((volatile GPTMCFG_Tag*)(WTIMER_1_BASE+GPTMCFG_Offset))
+#define GPTMCFG_WTIMER_2                                 *((volatile GPTMCFG_Tag*)(WTIMER_2_BASE+GPTMCFG_Offset))
+#define GPTMCFG_WTIMER_3                                 *((volatile GPTMCFG_Tag*)(WTIMER_3_BASE+GPTMCFG_Offset))
+#define GPTMCFG_WTIMER_4                                 *((volatile GPTMCFG_Tag*)(WTIMER_4_BASE+GPTMCFG_Offset))
+#define GPTMCFG_WTIMER_5                                 *((volatile GPTMCFG_Tag*)(WTIMER_5_BASE+GPTMCFG_Offset))
+
+#define GPTMTAMR_TIMER_0                                  *((volatile GPTMTnMR_Tag*)(TIMER_0_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_TIMER_1                                  *((volatile GPTMTnMR_Tag*)(TIMER_1_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_TIMER_2                                  *((volatile GPTMTnMR_Tag*)(TIMER_2_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_TIMER_3                                  *((volatile GPTMTnMR_Tag*)(TIMER_3_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_TIMER_4                                  *((volatile GPTMTnMR_Tag*)(TIMER_4_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_TIMER_5                                  *((volatile GPTMTnMR_Tag*)(TIMER_5_BASE+GPTMTAMR_Offset))
+#define GPTMTBMR_TIMER_0                                  *((volatile GPTMTnMR_Tag*)(TIMER_0_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_TIMER_1                                  *((volatile GPTMTnMR_Tag*)(TIMER_1_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_TIMER_2                                  *((volatile GPTMTnMR_Tag*)(TIMER_2_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_TIMER_3                                  *((volatile GPTMTnMR_Tag*)(TIMER_3_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_TIMER_4                                  *((volatile GPTMTnMR_Tag*)(TIMER_4_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_TIMER_5                                  *((volatile GPTMTnMR_Tag*)(TIMER_5_BASE+GPTMTBMR_Offset))
+
+#define GPTMTAMR_WTIMER_0                                  *((volatile GPTMTnMR_Tag*)(WTIMER_0_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_WTIMER_1                                  *((volatile GPTMTnMR_Tag*)(WTIMER_1_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_WTIMER_2                                  *((volatile GPTMTnMR_Tag*)(WTIMER_2_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_WTIMER_3                                  *((volatile GPTMTnMR_Tag*)(WTIMER_3_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_WTIMER_4                                  *((volatile GPTMTnMR_Tag*)(WTIMER_4_BASE+GPTMTAMR_Offset))
+#define GPTMTAMR_WTIMER_5                                  *((volatile GPTMTnMR_Tag*)(WTIMER_5_BASE+GPTMTAMR_Offset))
+#define GPTMTBMR_WTIMER_0                                  *((volatile GPTMTnMR_Tag*)(WTIMER_0_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_WTIMER_1                                  *((volatile GPTMTnMR_Tag*)(WTIMER_1_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_WTIMER_2                                  *((volatile GPTMTnMR_Tag*)(WTIMER_2_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_WTIMER_3                                  *((volatile GPTMTnMR_Tag*)(WTIMER_3_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_WTIMER_4                                  *((volatile GPTMTnMR_Tag*)(WTIMER_4_BASE+GPTMTBMR_Offset))
+#define GPTMTBMR_WTIMER_5                                  *((volatile GPTMTnMR_Tag*)(WTIMER_5_BASE+GPTMTBMR_Offset))
+
+#define GPTMIMR_TIMER_0                                  *((volatile GPTMIMR_Tag*)(TIMER_0_BASE+GPTMIMR_Offset))
+#define GPTMIMR_TIMER_1                                  *((volatile GPTMIMR_Tag*)(TIMER_1_BASE+GPTMIMR_Offset))
+#define GPTMIMR_TIMER_2                                  *((volatile GPTMIMR_Tag*)(TIMER_2_BASE+GPTMIMR_Offset))
+#define GPTMIMR_TIMER_3                                  *((volatile GPTMIMR_Tag*)(TIMER_3_BASE+GPTMIMR_Offset))
+#define GPTMIMR_TIMER_4                                  *((volatile GPTMIMR_Tag*)(TIMER_4_BASE+GPTMIMR_Offset))
+#define GPTMIMR_TIMER_5                                  *((volatile GPTMIMR_Tag*)(TIMER_5_BASE+GPTMIMR_Offset))
+#define GPTMIMR_WTIMER_0                                 *((volatile GPTMIMR_Tag*)(WTIMER_0_BASE+GPTMIMR_Offset))
+#define GPTMIMR_WTIMER_1                                 *((volatile GPTMIMR_Tag*)(WTIMER_1_BASE+GPTMIMR_Offset))
+#define GPTMIMR_WTIMER_2                                 *((volatile GPTMIMR_Tag*)(WTIMER_2_BASE+GPTMIMR_Offset))
+#define GPTMIMR_WTIMER_3                                 *((volatile GPTMIMR_Tag*)(WTIMER_3_BASE+GPTMIMR_Offset))
+#define GPTMIMR_WTIMER_4                                 *((volatile GPTMIMR_Tag*)(WTIMER_4_BASE+GPTMIMR_Offset))
+#define GPTMIMR_WTIMER_5                                 *((volatile GPTMIMR_Tag*)(WTIMER_5_BASE+GPTMIMR_Offset))
+
+#define GPTMICR_TIMER_0                                  *((volatile GPTMICR_Tag*)(TIMER_0_BASE+GPTMICR_Offset))
+#define GPTMICR_TIMER_1                                  *((volatile GPTMICR_Tag*)(TIMER_1_BASE+GPTMICR_Offset))
+#define GPTMICR_TIMER_2                                  *((volatile GPTMICR_Tag*)(TIMER_2_BASE+GPTMICR_Offset))
+#define GPTMICR_TIMER_3                                  *((volatile GPTMICR_Tag*)(TIMER_3_BASE+GPTMICR_Offset))
+#define GPTMICR_TIMER_4                                  *((volatile GPTMICR_Tag*)(TIMER_4_BASE+GPTMICR_Offset))
+#define GPTMICR_TIMER_5                                  *((volatile GPTMICR_Tag*)(TIMER_5_BASE+GPTMICR_Offset))
+#define GPTMICR_WTIMER_0                                 *((volatile GPTMICR_Tag*)(WTIMER_0_BASE+GPTMICR_Offset))
+#define GPTMICR_WTIMER_1                                 *((volatile GPTMICR_Tag*)(WTIMER_1_BASE+GPTMICR_Offset))
+#define GPTMICR_WTIMER_2                                 *((volatile GPTMICR_Tag*)(WTIMER_2_BASE+GPTMICR_Offset))
+#define GPTMICR_WTIMER_3                                 *((volatile GPTMICR_Tag*)(WTIMER_3_BASE+GPTMICR_Offset))
+#define GPTMICR_WTIMER_4                                 *((volatile GPTMICR_Tag*)(WTIMER_4_BASE+GPTMICR_Offset))
+#define GPTMICR_WTIMER_5                                 *((volatile GPTMICR_Tag*)(WTIMER_5_BASE+GPTMICR_Offset))
+
+#define GPTMTAILR_TIMER_0                                  *((volatile uint32*)(TIMER_0_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_TIMER_1                                  *((volatile uint32*)(TIMER_1_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_TIMER_2                                  *((volatile uint32*)(TIMER_2_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_TIMER_3                                  *((volatile uint32*)(TIMER_3_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_TIMER_4                                  *((volatile uint32*)(TIMER_4_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_TIMER_5                                  *((volatile uint32*)(TIMER_5_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_WTIMER_0                                 *((volatile uint32*)(WTIMER_0_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_WTIMER_1                                 *((volatile uint32*)(WTIMER_1_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_WTIMER_2                                 *((volatile uint32*)(WTIMER_2_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_WTIMER_3                                 *((volatile uint32*)(WTIMER_3_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_WTIMER_4                                 *((volatile uint32*)(WTIMER_4_BASE+GPTMTAILR_Offset))
+#define GPTMTAILR_WTIMER_5                                 *((volatile uint32*)(WTIMER_5_BASE+GPTMTAILR_Offset))
+
+#define GPTMTAV_TIMER_0                                  *((volatile uint32*)(TIMER_0_BASE+GPTMTAV_Offset))
+#define GPTMTAV_TIMER_1                                  *((volatile uint32*)(TIMER_1_BASE+GPTMTAV_Offset))
+#define GPTMTAV_TIMER_2                                  *((volatile uint32*)(TIMER_2_BASE+GPTMTAV_Offset))
+#define GPTMTAV_TIMER_3                                  *((volatile uint32*)(TIMER_3_BASE+GPTMTAV_Offset))
+#define GPTMTAV_TIMER_4                                  *((volatile uint32*)(TIMER_4_BASE+GPTMTAV_Offset))
+#define GPTMTAV_TIMER_5                                  *((volatile uint32*)(TIMER_5_BASE+GPTMTAV_Offset))
+#define GPTMTAV_WTIMER_0                                 *((volatile uint32*)(WTIMER_0_BASE+GPTMTAV_Offset))
+#define GPTMTAV_WTIMER_1                                 *((volatile uint32*)(WTIMER_1_BASE+GPTMTAV_Offset))
+#define GPTMTAV_WTIMER_2                                 *((volatile uint32*)(WTIMER_2_BASE+GPTMTAV_Offset))
+#define GPTMTAV_WTIMER_3                                 *((volatile uint32*)(WTIMER_3_BASE+GPTMTAV_Offset))
+#define GPTMTAV_WTIMER_4                                 *((volatile uint32*)(WTIMER_4_BASE+GPTMTAV_Offset))
+#define GPTMTAV_WTIMER_5                                 *((volatile uint32*)(WTIMER_5_BASE+GPTMTAV_Offset))
+
 
 /**********************************************************************************************************************
  *  GLOBAL DATA PROTOTYPES

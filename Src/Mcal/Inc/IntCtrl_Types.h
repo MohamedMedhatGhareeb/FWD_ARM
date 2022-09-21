@@ -131,6 +131,28 @@ uDMA_Err            =       47      ,
 
 }IntCtrl_InterruptType;
 
+
+typedef enum
+ {	
+	 GPIO_PORTA    = 0    ,
+	 GPIO_PORTB     			,
+	 GPIO_PORTC     			,
+	 GPIO_PORTD     			,
+	 GPIO_PORTE     			,
+	 
+	UART0         			  ,
+	UART1     
+	 
+ }IRQ_Type ;
+ 
+typedef struct{
+	IRQ_Type	       		    IRQn;
+	uint8					    Group_Pr;
+	uint8					    SubGroup_Pr;
+	uint8						State;   //enable-disable
+}IRQ_CfgType;
+
+
  
 #endif  /* INTCTRL_TYPES_H */
 
